@@ -8,22 +8,23 @@ Created on Mon Oct 25 13:23:48 2021
 
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.signal import hilbert
-import pandas
-from scipy.fft import fft
+#from scipy.signal import hilbert
+#import pandas
+#from scipy.fft import fft
 viteau=1500#m.s^-1
-densiteEau=1,33
-
+densiteEau=1.48*10**6
+#z = MasseVolumique * vitesse du milieu
+#MasseVolumique bio = 1,02g/cm**3
 def TempsEmissionReflexion(d,h):
     distance= np.sqrt(d**2+h**2)
     
-    t=distance/viteau
+    t=2*distance/viteau
     
     return t
 
-def TempsSignalRefraction(distance,hauteurbio,nbio,vitessebio,alpha,hauteuremeteur):
+def TempsSignalRefraction(distance,hauteurbio,zbio,vitessebio,alpha,hauteuremeteur):
     hypo=hauteuremeteur/np.sin(alpha)
-    beta=np.arcsin((densiteEau*np.sin(alpha))/nbio)
+    beta=np.arcsin((densiteEau*np.sin(alpha))/zbio)
     hypobio=hauteurbio/np.cos(beta)
     tempseau=(2*hypo)/viteau
     tempsbio=(2*hypobio)/vitessebio
@@ -33,28 +34,32 @@ def TempsSignalRefraction(distance,hauteurbio,nbio,vitessebio,alpha,hauteuremete
     
     
 
-time=np.arange(0,6,0.01)
-Initial=np.zeros(np.shape(time))
+time=np.arange(0,0.001,0.000001)
+Initial=np.zeros(len(time))
 for i in range(len(time)):
     Initial[i]=np.sin(time[i])
-plt.plot(Initial)
+plt.plot(time,Initial)
 tref=TempsEmissionReflexion(0.4, 0.4)
-reflexion=np.zeros(np.shape(time))
+reflexion=np.zeros(len(time))
 j = 0
 for i in range(len(time)):
-    if i*100<=tref:
+    if i*10**-6<=tref:
         reflexion[i]=0
     else:
        reflexion[i]=0.5*np.sin(time[j])
        j=j+1
-plt.plot(reflexion)
-trac=TempsSignalRefraction(0,4,1*10**-6,  ,  ,  ,0,4)
-refraction=np.zeros(np.shape(time))
+
+trac=TempsSignalRefraction(0.4,100*10**-3,viteau*1.02*10**3,viteau,np.pi/4,0.4)
+refraction=np.zeros(len(time))
 k = 0
 for i in range(len(time)):
-    if i*100<=trac:
+    if i*10**-6<=trac:
         refraction[i]=0
     else:
        refraction[i]=0.5*np.sin(time[k])
        k=k+1
-plt.plot(refraction)
+total=np.zeros(len(time))
+for i in range(len(time)):
+    total[i]=reflexion[i]+refraction[i]
+plt.plot(time,total)
+
