@@ -7,7 +7,7 @@ Created on Mon Oct 25 13:23:48 2021
 """
 
 import numpy as np
-import scipy as sc
+from scipy import signal
 import matplotlib.pyplot as plt
 #from scipy.signal import hilbert
 #import pandas
@@ -26,10 +26,20 @@ t=2*distance/viteau
     
 
 
-hauteurbio = 100*10**-3
+hauteurbio = 1*10**-3
 zbio=viteau*1.02*10**3
 vitessebio=viteau
 alpha=np.pi/4
+
+xb=
+yb=
+
+xe=0
+ye=0
+
+xr=0
+yr=0
+
 
 hypo=h/np.sin(alpha)
 beta=np.arcsin((densiteEau*np.sin(alpha))/zbio)
@@ -41,17 +51,21 @@ distancerefraction=2*hypo+2*hypobio
     
 
     
-fe=1e8;
-t_max=1.5/1500;    
-time=np.arange(0,t_max,1/fe)
+fe=1e8;#echantillonnage f*100
+t_max=1.5/1500;#le trajet le plus long pour un echo de retour est environ de 1.5m. Donc t_max = temps max de retour d'echo pr la simulation    
+time=np.arange(0,t_max,1/fe)#vecteur temps
+nbr_pulses=2
+gate=(1+signal.square(2*np.pi*((1/t_max))*time,((nbr_pulses/f)/t_max)))/2#porte pour créer pûlse
+sig=np.sin(2*np.pi*f*time)*gate#pulse signal
 
-sig=np.sin(2*np.pi*f*time)
-porte=
-
-Initial=np.zeros(len(time))
-for i in range(len(time)):
-    Initial[i]=np.sin(2*np.pi*f*time[i])
-plt.plot(time,Initial)
+delay_bio=2*distance/viteau
+delay_beton=tempstotal
+refl_bio=np.sin(2*np.pi*f*(time-delay_bio))*(1+signal.square(2*np.pi*((1/t_max))*(time-delay_bio),((nbr_pulses/f)/t_max)))/2
+refl_beton=np.sin(2*np.pi*f*(time-delay_beton))*(1+signal.square(2*np.pi*((1/t_max))*(time-delay_beton),((nbr_pulses/f)/t_max)))/2
+# Initial=np.zeros(len(time))
+# for i in range(len(time)):
+#     Initial[i]=np.sin(2*np.pi*f*time[i])
+# plt.plot(time,Initial)
 
 reflexion=np.zeros(len(time))
 j = 0
