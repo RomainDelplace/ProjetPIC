@@ -31,13 +31,13 @@ zbio=viteau*1.02*10**3
 vitessebio=viteau
 alpha=np.pi/4
 
-xb=
-yb=
+xb=20
+yb=50
 
 xe=0
 ye=0
 
-xr=0
+xr=40
 yr=0
 
 
