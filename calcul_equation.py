@@ -6,8 +6,9 @@ Created on Mon Nov  1 08:20:56 2021
 @author: OmbelineDo
 """
 
-
 import sympy as sy
+import matplotlib.pyplot as plt
+import numpy as np
 
 def resultat(Xb, Yb, Xr, Yr, Ys, c1, c2, h1, h2):
    Xs = sy.symbols('Xs')
@@ -15,7 +16,12 @@ def resultat(Xb, Yb, Xr, Yr, Ys, c1, c2, h1, h2):
    #result = sy.solve(((Xs-Xb)*(Xs-Xb))/(c2*c2*((Xs-Xb)*(Xs-Xb)+(Ys-Yb)*(Ys-Yb)))-((Xr-Xs)*(Xr-Xs))/(c1*c1*((Xr-Xs)*(Xr-Xs)+(Yr-Ys)*(Yr-Ys))), Xs)  
    #result = sy.solveset(((Xs-Xb)*(Xs-Xb))/(c2*c2*((Xs-Xb)*(Xs-Xb)+(Ys-Yb)*(Ys-Yb)))-((Xr-Xs)*(Xr-Xs))/(c1*c1*((Xr-Xs)*(Xr-Xs)+(Yr-Ys)*(Yr-Ys))), Xs)
    result_root = sy.root(((Xs-Xb)*(Xs-Xb))/(c2*c2*((Xs-Xb)*(Xs-Xb)+(Ys-Yb)*(Ys-Yb)))-((Xr-Xs)*(Xr-Xs))/(c1*c1*((Xr-Xs)*(Xr-Xs)+(Yr-Ys)*(Yr-Ys))), Xs)  
-   #plot(result_root,(Xs,-3-j,3+j))
+
+   
+   x = np.linspace(-4, 4, 1001)
+   exec('y = %s' % str(result_root).replace('Xs','x'))
+   plt.plot(x, y)
+   plt.show()
    return result
 
 Xb = 0.20
