@@ -57,35 +57,38 @@ time=np.arange(0,t_max,1/fe)#vecteur temps
 nbr_pulses=2
 gate=(1+signal.square(2*np.pi*((1/t_max))*time,((nbr_pulses/f)/t_max)))/2#porte pour créer pûlse
 sig=np.sin(2*np.pi*f*time)*gate#pulse signal
+plt.plot(time,sig)
 
 delay_bio=2*distance/viteau
 delay_beton=tempstotal
 refl_bio=np.sin(2*np.pi*f*(time-delay_bio))*(1+signal.square(2*np.pi*((1/t_max))*(time-delay_bio),((nbr_pulses/f)/t_max)))/2
+plt.plot(time,refl_bio)
 refl_beton=np.sin(2*np.pi*f*(time-delay_beton))*(1+signal.square(2*np.pi*((1/t_max))*(time-delay_beton),((nbr_pulses/f)/t_max)))/2
+plt.plot(time,refl_beton)
 # Initial=np.zeros(len(time))
 # for i in range(len(time)):
 #     Initial[i]=np.sin(2*np.pi*f*time[i])
 # plt.plot(time,Initial)
 
-reflexion=np.zeros(len(time))
-j = 0
-for i in range(len(time)):
-    if i*10**-6<=t:
-        reflexion[i]=0
-    else:
-       reflexion[i]=0.5*np.sin(2*np.pi*f*time[j])
-       j=j+1
-
-refraction=np.zeros(len(time))
-k = 0
-for i in range(len(time)):
-    if i*10**-6<=tempstotal:
-        refraction[i]=0
-    else:
-       refraction[i]=0.5*np.sin(2*np.pi*f*time[k])
-       k=k+1
-total=np.zeros(len(time))
-for i in range(len(time)):
-    total[i]=reflexion[i]+refraction[i]
-plt.plot(time,total)
+#reflexion=np.zeros(len(time))
+#j = 0
+#for i in range(len(time)):
+#    if i*10**-6<=t:
+#        reflexion[i]=0
+#    else:
+#       reflexion[i]=0.5*np.sin(2*np.pi*f*time[j])
+#       j=j+1
+#
+#refraction=np.zeros(len(time))
+#k = 0
+#for i in range(len(time)):
+#    if i*10**-6<=tempstotal:
+#        refraction[i]=0
+#    else:
+#       refraction[i]=0.5*np.sin(2*np.pi*f*time[k])
+#       k=k+1
+#total=np.zeros(len(time))
+#for i in range(len(time)):
+#    total[i]=reflexion[i]+refraction[i]
+#plt.plot(time,total)
 
