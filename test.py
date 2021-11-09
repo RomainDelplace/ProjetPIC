@@ -12,59 +12,59 @@ import matplotlib.pyplot as plt
 #from scipy.signal import hilbert
 #import pandas
 #from scipy.fft import fft
-viteau=1480#m.s^-1
-densiteEau=1.48*10**6
-f=1*10**6
+vitesse_eau=1480#m.s^-1
+indice_eau=1.48*10**6
+freq_emission=1*10**6
 #z = MasseVolumique * vitesse du milieu
 #MasseVolumique bio = 1,02g/cm**3
-d=0.4
-h=0.4
+distance_entre_capteur=0.4
+distance_capteur_biofilm=0.4
 
-distance= np.sqrt((d/2)**2+h**2)
+distance_reflexion_speculaire= np.sqrt((distance_entre_capteur/2)**2+distance_capteur_biofilm**2)
     
-t=2*distance/viteau
-    
-
-
-hauteurbio = 1*10**-3
-zbio=viteau*1.02*10**3
-vitessebio=viteau
-alpha=np.pi/4
-
-xb=20
-yb=50
-
-xe=0
-ye=0
-
-xr=40
-yr=0
-
-
-hypo=h/np.sin(alpha)
-beta=np.arcsin((densiteEau*np.sin(alpha))/zbio)
-hypobio=hauteurbio/np.cos(beta)
-tempseau=(2*hypo)/viteau
-tempsbio=(2*hypobio)/vitessebio
-tempstotal=tempseau+tempsbio
-distancerefraction=2*hypo+2*hypobio
+t=2*distance_reflexion_speculaire/vitesse_eau
     
 
+
+hauteur_biofilm = 1*10**-3
+indice_biofilm=vitesse_eau*1.02*10**3
+vitesse_biofilm=vitesse_eau
+angleInjection_speculaire=np.pi/4
+
+x_biofilm=20
+y_biofilm=50
+
+x_emetteur=0
+y_emetteur=0
+
+x_recepteur=40
+y_recepteur=0
+
+
+hypothenus_speculaire_eau=distance_capteur_biofilm/np.sin(angleInjection_speculaire)
+angle_refraction_speculaire=np.arcsin((indice_eau*np.sin(angleInjection_speculaire))/indice_biofilm)
+hypothenus_speculaire_biofilm=hauteur_biofilm/np.cos(angle_refraction_speculaire)
+temps_speculaire_eau=(2*hypothenus_speculaire_eau)/vitesse_eau
+temps_speculaire_biofilm=(2*hypothenus_speculaire_biofilm)/vitesse_biofilm
+temps_total_speculaire=temps_speculaire_eau+temps_speculaire_biofilm
+distance_refraction_speculaire=2*hypothenus_speculaire_eau+2*hypothenus_speculaire_biofilm
     
-fe=1e8;#echantillonnage f*100
-t_max=1.5/1500;#le trajet le plus long pour un echo de retour est environ de 1.5m. Donc t_max = temps max de retour d'echo pr la simulation    
-time=np.arange(0,t_max,1/fe)#vecteur temps
+
+    
+freq_echantillonnage=1e8;#echantillonnage f*100
+temp_max_echo=1.5/1500;#le trajet le plus long pour un echo de retour est environ de 1.5m. Donc t_max = temps max de retour d'echo pr la simulation    
+vecteur_temps=np.arange(0,temp_max_echo,1/freq_echantillonnage)#vecteur temps
 nbr_pulses=2
-gate=(1+signal.square(2*np.pi*((1/t_max))*time,((nbr_pulses/f)/t_max)))/2#porte pour créer pûlse
-sig=np.sin(2*np.pi*f*time)*gate#pulse signal
-plt.plot(time,sig)
+porte=(1+signal.square(2*np.pi*((1/temp_max_echo))*vecteur_temps,((nbr_pulses/freq_emission)/temp_max_echo)))/2#porte pour créer pûlse
+signal_pulse=np.sin(2*np.pi*freq_emission*vecteur_temps)*porte#pulse signal
+plt.plot(vecteur_temps,signal_pulse)
 
-delay_bio=2*distance/viteau
-delay_beton=tempstotal
-refl_bio=np.sin(2*np.pi*f*(time-delay_bio))*(1+signal.square(2*np.pi*((1/t_max))*(time-delay_bio),((nbr_pulses/f)/t_max)))/2
-plt.plot(time,refl_bio)
-refl_beton=np.sin(2*np.pi*f*(time-delay_beton))*(1+signal.square(2*np.pi*((1/t_max))*(time-delay_beton),((nbr_pulses/f)/t_max)))/2
-plt.plot(time,refl_beton)
+retard_dans_biofilm=2*distance_reflexion_speculaire/vitesse_eau
+retard_paroi=temps_total_speculaire
+reflexion_dans_biofilm=np.sin(2*np.pi*freq_emission*(vecteur_temps-retard_dans_biofilm))*(1+signal.square(2*np.pi*((1/temp_max_echo))*(vecteur_temps-retard_dans_biofilm),((nbr_pulses/freq_emission)/temp_max_echo)))/2
+plt.plot(vecteur_temps,reflexion_dans_biofilm)
+reflexion_dans_beton=np.sin(2*np.pi*freq_emission*(vecteur_temps-retard_paroi))*(1+signal.square(2*np.pi*((1/temp_max_echo))*(vecteur_temps-retard_paroi),((nbr_pulses/freq_emission)/temp_max_echo)))/2
+plt.plot(vecteur_temps,reflexion_dans_beton)
 # Initial=np.zeros(len(time))
 # for i in range(len(time)):
 #     Initial[i]=np.sin(2*np.pi*f*time[i])
