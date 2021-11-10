@@ -25,11 +25,36 @@ Yb = 0.5
 Xr = 0.40
 Yr = 0
 Ys = 0.4
-c1 = 1.48*10**6
-c2 = 1.51*10**6
+c1 = 1.48*10**3
+c2 = 1.2*c1
 
 
 resultat_xs = resultat(Xb, Yb, Xr, Yr, Ys, c1, c2)
-
+np.complex(resultat_xs)
 #resultat_first_xs = resultat(Xb, Yb, Xr, Yr, Ys, c1, c2, h1, h2)[0]
 #resultat_second_xs = resultat(Xb, Yb, Xr, Yr, Ys, c1, c2, h1, h2)[1]
+
+#A = sy.symbols('A')
+#B = sy.symbols('B')
+#C = sy.symbols('C')
+#D = sy.symbols('E')
+#E = sy.symbols('A')
+#x = sy.symbols('x')
+#y = sy.symbols('y')
+#z = sy.symbols('z')
+#t = sy.symbols('t')
+#from sympy.solvers.solveset import linsolve
+
+#equation = linsolve([B/A-x-y-z-t, z*t+(x+y)*(z+t)+x*y-C/A, (x+y)*z*t-(z+t)*x*y-D/A, E/A-x*y*z*t],(x,y,z,t))
+
+
+
+def resultat2(Xb, Yb, Xr, Yr, Ys, c1, c2):
+   Xs = sy.symbols('Xs')
+   result = sy.solve(((3*(Xs)**2)+Xs+9), Xs)  
+   first_result= result[0]
+   second_result= result[1]
+   #result = sy.solve(((Xs-Xb)*(Xs-Xb))/(c2*c2*((Xs-Xb)*(Xs-Xb)+(Ys-Yb)*(Ys-Yb)))-((Xr-Xs)*(Xr-Xs))/(c1*c1*((Xr-Xs)*(Xr-Xs)+(Yr-Ys)*(Yr-Ys))), Xs)  
+   #result = sy.solveset(((Xs-Xb)*(Xs-Xb))/(c2*c2*((Xs-Xb)*(Xs-Xb)+(Ys-Yb)*(Ys-Yb)))-((Xr-Xs)*(Xr-Xs))/(c1*c1*((Xr-Xs)*(Xr-Xs)+(Yr-Ys)*(Yr-Ys))), Xs)
+   #result_root = sy.root(((Xs-Xb)*(Xs-Xb))/(c2*c2*((Xs-Xb)*(Xs-Xb)+(Ys-Yb)*(Ys-Yb)))-((Xr-Xs)*(Xr-Xs))/(c1*c1*((Xr-Xs)*(Xr-Xs)+(Yr-Ys)*(Yr-Ys))), Xs)  
+   return result
