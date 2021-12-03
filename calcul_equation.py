@@ -13,8 +13,7 @@ import numpy as np
 def resultat(Xb, Yb, Xr, Yr, Ys, c1, c2):
    Xs = sy.symbols('Xs')
    result = sy.solve((((Xs-Xb)**2)/(c2**2*((Xb-Xs)**2+(Yb-Ys)**2)))-(((Xr-Xs)**2)/(c1**2*((Xr-Xs)**2+(Yr-Ys)**2))), Xs)  
-   first_result= result[0]
-   second_result= result[1]
+   
    #result = sy.solve(((Xs-Xb)*(Xs-Xb))/(c2*c2*((Xs-Xb)*(Xs-Xb)+(Ys-Yb)*(Ys-Yb)))-((Xr-Xs)*(Xr-Xs))/(c1*c1*((Xr-Xs)*(Xr-Xs)+(Yr-Ys)*(Yr-Ys))), Xs)  
    #result = sy.solveset(((Xs-Xb)*(Xs-Xb))/(c2*c2*((Xs-Xb)*(Xs-Xb)+(Ys-Yb)*(Ys-Yb)))-((Xr-Xs)*(Xr-Xs))/(c1*c1*((Xr-Xs)*(Xr-Xs)+(Yr-Ys)*(Yr-Ys))), Xs)
    #result_root = sy.root(((Xs-Xb)*(Xs-Xb))/(c2*c2*((Xs-Xb)*(Xs-Xb)+(Ys-Yb)*(Ys-Yb)))-((Xr-Xs)*(Xr-Xs))/(c1*c1*((Xr-Xs)*(Xr-Xs)+(Yr-Ys)*(Yr-Ys))), Xs)  
@@ -28,9 +27,19 @@ Ys = 0.4
 c1 = 1.48*10**3
 c2 = 1.2*c1
 
-
-resultat_xs = resultat(Xb, Yb, Xr, Yr, Ys, c1, c2)
-np.complex(resultat_xs)
+def calcul(Xb, Yb, Xr, Yr, Ys, c1, c2):
+    resultat_xs = resultat(Xb, Yb, Xr, Yr, Ys, c1, c2)
+    r_complex = []
+    for i in range(len(resultat_xs)):
+        res=complex(resultat_xs[i])
+        res=np.real(res)
+        r_complex.append(res)
+    
+    for i in range(len(r_complex)):
+        if (r_complex[i]>Xb and r_complex[i]<Xr):
+            resultat_possible=r_complex[i]
+    return resultat_possible
+#np.complex(resultat_xs)
 #resultat_first_xs = resultat(Xb, Yb, Xr, Yr, Ys, c1, c2, h1, h2)[0]
 #resultat_second_xs = resultat(Xb, Yb, Xr, Yr, Ys, c1, c2, h1, h2)[1]
 
