@@ -9,6 +9,7 @@ Created on Mon Oct 25 13:23:48 2021
 import numpy as np
 from scipy import signal
 import matplotlib.pyplot as plt
+import calcul_equation as ce
 #from scipy.signal import hilbert
 #import pandas
 #from scipy.fft import fft
@@ -27,7 +28,6 @@ t=2*distance_reflexion_speculaire/vitesse_eau
 hauteur_biofilm = 1*10**-3
 indice_biofilm=vitesse_eau*1.02*10**3
 vitesse_biofilm=vitesse_eau
-angle_injection_secondaire_eau=np.pi/4
 
 x_biofilm=20
 y_biofilm=50
@@ -38,6 +38,9 @@ y_emetteur=0
 x_recepteur=40
 y_recepteur=0
 
+x_s=ce.calcul(x_biofilm/100, y_biofilm/100, x_recepteur/100 , y_recepteur/100,hauteur_biofilm/100,indice_eau*100,indice_biofilm*100)*100
+x_s=20
+angle_injection_secondaire_eau=np.arctan(np.sqrt((x_recepteur-x_s)**2)/np.sqrt((y_recepteur-distance_capteur_biofilm)**2))
 
 hypothenus_secondaire_eau=distance_capteur_biofilm/np.sin(angle_injection_secondaire_eau)
 angle_injection_secondaire_biofilm=np.arcsin((indice_eau*np.sin(angle_injection_secondaire_eau))/indice_biofilm)
