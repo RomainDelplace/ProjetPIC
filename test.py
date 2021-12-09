@@ -19,7 +19,7 @@ freq_emission=1*10**6
 #z = MasseVolumique * vitesse du milieu
 #MasseVolumique bio = 1,02g/cm**3
 distance_entre_capteur=0.8
-distance_capteur_biofilm=0.4
+distance_capteur_biofilm=0.499
 
 distance_reflexion_speculaire= np.sqrt((distance_entre_capteur/2)**2+distance_capteur_biofilm**2)   
 angle_injection_speculaire=np.arccos(distance_capteur_biofilm/distance_reflexion_speculaire)
@@ -30,16 +30,16 @@ indice_biofilm=vitesse_eau*1.02*10**3
 vitesse_biofilm=vitesse_eau
 
 x_biofilm=20
-y_biofilm=50
+y_biofilm=-50
 
 x_emetteur=0
-y_emetteur=0
+y_emetteur=-0
 
 x_recepteur=40
-y_recepteur=0
+y_recepteur=-0
 
-x_s=ce.calcul(x_biofilm/100, y_biofilm/100, x_recepteur/100 , y_recepteur/100,hauteur_biofilm/100,indice_eau*100,indice_biofilm*100)*100
-x_s=20
+x_s=ce.calculBR(x_biofilm/100, y_biofilm/100, x_recepteur/100 , y_recepteur/100,-distance_capteur_biofilm,indice_eau,indice_biofilm)*100
+
 angle_injection_secondaire_eau=np.arctan(np.sqrt((x_recepteur-x_s)**2)/np.sqrt((y_recepteur-distance_capteur_biofilm)**2))
 
 hypothenus_secondaire_eau=distance_capteur_biofilm/np.sin(angle_injection_secondaire_eau)
