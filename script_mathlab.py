@@ -9,6 +9,7 @@ import numpy as np
 import scipy as sc
 import matplotlib.pyplot as plt
 from tqdm import tqdm
+import transonic
 
 #_____________________________VARIABLES NUMPY_________________________________#
 def cos(x):
@@ -28,7 +29,7 @@ def atan(x):
 def sinc(x):
     return np.sinc(x)
 def bessel(x,y):
-    return sc.jv(x,y)
+    return sc.special.jv(x,y)
 
 pi=np.pi
 
@@ -74,10 +75,10 @@ waitbar2=0
 
 #_________________________________MATRICE_____________________________________#
 
-beta2=np.array([[[0]*len(x)]*len(y)]*len(z))
-betax=np.array([[[0]*len(x)]*len(y)]*len(z))
-betay=np.array([[[0]*len(x)]*len(y)]*len(z))
-beta1=np.array([[[0]*len(x)]*len(y)]*len(z))
+beta2=np.array([[[0]*len(x)]*len(y)]*len(z),dtype=float)
+betax=np.array([[[0]*len(x)]*len(y)]*len(z),dtype=float)
+betay=np.array([[[0]*len(x)]*len(y)]*len(z),dtype=float)
+beta1=np.array([[[0]*len(x)]*len(y)]*len(z),dtype=float)
 
 print('creation des matrices faites')
 
